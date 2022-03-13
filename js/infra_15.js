@@ -3742,12 +3742,7 @@ function toggle_options2() {
     : (display_blocks("options", "none"),
       set_variable("more", "More options &#x25BC;"));
 }
-function like() {
-  return (
-    '<div class="fb-like" data-href="http://www.statskingdom.com/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>',
-    '<span class="num_col">If you like the page, please share or like. Questions, comments and suggestions are appreciated. (statskingdom@gmail.com)</span><br><div class="fb-like" data-href="http://www.statskingdom.com/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>'
-  );
-}
+function like() {}
 function html_field(e, t, r, n, o, a, i, l) {
   ("def" != n && "" != n) || (n = "col-md-6"),
     ("def" != a && "" != a) || (a = "number"),
