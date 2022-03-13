@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <script>
+    function rerun() {
+      GEBI("refresh1").checked &&
+        "" != GEBI("DistributionC").innerHTML &&
+        calculate(document.getElementById("distribution1").value, 1e-6);
+    }
+  </script>
+  <meta charset="UTF-8" />
+  <meta
+    name="description"
+    content="Normal distribution calculator. Calculates the cumulative probability or the percentile, and the probability density function (PDF)"
+  />
+  <meta
+    name="keywords"
+    content="normal distribution calculator,normal cdf calculator,inverse normal distribution calculator,normal distribution formula"
+  />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <title>Normal Distribution Calculator</title>
+  <link
+    rel="stylesheet"
+    href="http://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
+  <script async src="https://www.gstatic.com/charts/loader.js"></script>
+  <script async src="js/infra_15.js"></script>
+  <script async src="js/distribution_calculator.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.7.1/jstat.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <div id="top">
+    <div id="header">
+      <p class="first_header">
+        <a href="index.html" style="color: #fff"
+          >standard normal distribution calculator</a
+        >
+      </p>
+    </div>
+  </div>
+  <div id="wrapper" class="container-fluid px-lg-5 grey_backgroud">
+    <div id="main" class="row">
+      <div class="col-md-9">
+        <h1 class="n_h1 mt-2">Normal Distribution Calculator</h1>
+        <p>
+          <i
+            >Cumulative distribution function (CDF), Percentile, Probability
+            between two values and Probability density function (PDF)</i
+          >
+        </p>
+
+        <form id="enter_data" class="form-row blue_backgroud p-4">
+          <div class="form-group col-md-6">
+            <label for="distribution1"><b>Distribution</b></label>
+            <select
+              onchange="change_distribution(),rerun()"
+              class="form-control"
+              id="distribution1"
+            >
+              <option value="Normal">Normal</option>
+              <option value="binomial">Binomial</option>
+              <option value="T">T</option>
+              <option value="Chi-Square">Chi-Square</option>
+              <option value="F">F</option>
+              <option value="poisson">Poisson</option>
+              <option value="weibull">Weibull</option>
+              <option value="exponential">Exponential</option>
+            </select>
+          </div>
+          <div id="x1_r" class="form-group col-md-6">
+            <label for="x1"
+              ><a href="glossary.html#mean">Mean (&mu;):</a></label
+            >
+            <input
+              onchange="rerun()"
+              class="form-control"
+              type="number"
+              value="0"
+              id="x1"
+            />
+          </div>
+          <div id="sigma1_r" class="form-group col-md-6">
+            <label for="check"
+              ><a href="glossary.html#sigma"
+                >Standard deviation (&sigma;):</a
+              ></label
+            >
+            <input
+              onchange="rerun()"
+              class="form-control"
+              type="number"
+              value="1"
+              id="sigma1"
+            />
+          </div>
+          <div id="lambda_r" style="display: none" class="form-group col-md-6">
+            <label for="lambda"
+              ><span class="tooltip1"
+                >Rate (&lambda;)
+                <span class="tooltiptext1"
+                  >The average number of events per unit of time</span
+                ></span
+              ></label
+            >
+            <input
+              onchange="rerun()"
+              class="form-control"
+              type="number"
+              value="4"
+              id="lambda"
+            />
+          </div>
+          <div id="shape_r" style="display: none" class="form-group col-md-6">
+            <label for="shape"
+              ><span class="tooltip1"
+                >Shape (k)
+                <span class="tooltiptext1"
+                  >The shape parameter, also known as the Weibull slope. When
+                  shape=1, it is the <b>exponential distribution</b></span
+                ></span
+              ></label
+            >
+            <input
+              onchange="rerun()"
+              class="form-control"
+              type="number"
+              value="4"
+              id="shape"
+            />
+          </div>
+          <div id="scale_r" style="display: none" class="form-group col-md-6">
+            <label for="scale"
+              ><span class="tooltip1"
+                >Scale (&lambda;)
+                <span class="tooltiptext1"
+                  >The larger the scale parameter, the more spread out the
+                  distribution.<br />For the <b>exponential</b> distribution,
+                  this parameter represents the
+                  <b>average duration between the events</b>'</span
+                ></span
+              ></label
+            >
+            <input
+              onchange="rerun()"
+              class="form-control"
+              type="number"
+              value="4"
+              id="scale"
+            />
+          </div>
+          <div id="df_r" style="display: none" class="form-group col-md-6">
+            <label for="df">Degrees of freedom</label>
+            <input
+              onchange="rerun()"
+              class="form-control"
+              type="number"
+              value="4"
+              id="df"
+            />
+          </div>
+          <div id="df2_r" style="display: none" class="form-group col-md-6">
+            <label for="df2">Degrees of freedom - <i>denominator</i></label>
+            <input
+              onchange="rerun()"
+              class="form-control"
+              type="number"
+              value="3"
+              id="df2"
+            />
+          </div>
+          <div id="p_r" style="display: none" class="form-group col-md-6">
+            <label for="p"
+              ><span class="tooltip1"
+                >Probability of success (P)
+                <span class="tooltiptext1"
+                  >The probability of succeed in one trial</span
+                ></span
+              ></label
+            >
+            <input
+              onchange="rerun()"
+              class="form-control"
+              type="number"
+              value="0.25"
+              id="p"
+            />
+          </div>
+          <div id="n_r" style="display: none" class="form-group col-md-6">
+            <label for="n"
+              ><span class="tooltip1"
+                >Sample size (n)
+                <span class="tooltiptext1">The number of trials</span></span
+              ></label
+            >
+            <input
+              onchange="rerun()"
+              class="form-control"
+              type="number"
+              value="20"
+              id="n"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="check"
+              ><span class="tooltip1"
+                >Probability (p) or percentile (𝑥)
+                <span class="tooltiptext1"
+                  ><span class="text-success">𝑥<sub>1</sub></span
+                  >: calculates
+                  <span class="text-primary">p(X&le;𝑥<sub>1</sub>)</span
+                  ><br /><span class="text-success">p(X&le;𝑥<sub>1</sub>)</span
+                  >: calculates <span class="text-primary">𝑥<sub>1</sub></span
+                  ><br /><span class="text-success"
+                    >𝑥<sub>1</sub>, 𝑥<sub>2</sub></span
+                  >: calculates
+                  <span class="text-primary"
+                    >p(𝑥<sub>1</sub>&le;X&le;𝑥<sub>2</sub>)</span
+                  ><br /><span class="text-success"
+                    >p(X&le;𝑥<sub>1</sub>), p(X&le;𝑥<sub>2</sub>)</span
+                  >:<br />calculates
+                  <span class="text-primary"
+                    >𝑥<sub>1</sub>, 𝑥<sub>2</sub>, p<sub>2</sub>-p<sub
+                      >1</sub
+                    ></span
+                  ></span
+                ></span
+              ></label
+            >
+            <select onchange="two_values()" id="check" class="form-control">
+              <option value="x">𝑥₁</option>
+              <option value="p">p(X&le;𝑥₁)</option>
+              <option value="x2">𝑥₁, 𝑥₂</option>
+              <option value="p2">p(X&le;𝑥₁), p(X&le;𝑥₂)</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="check">
+              <div id="val1">𝑥<sub>1</sub></div>
+            </label>
+            <input
+              onchange="rerun()"
+              class="form-control"
+              type="number"
+              value="1.644854"
+              id="xp"
+            />
+          </div>
+          <div id="value2" style="display: none" class="form-group col-md-6">
+            <label for="check">
+              <div id="val2">𝑥<sub>2</sub></div>
+            </label>
+            <input
+              onchange="rerun()"
+              class="form-control"
+              type="number"
+              value="2.2"
+              id="xp2"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="digits"
+              ><a href="glossary.html#round">Rounding:</a></label
+            >
+            <select onchange="rerun()" class="form-control" id="digits">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option selected="selected" value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">6</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="10">20</option>
+            </select>
+          </div>
+          <div class="w-100">
+            <div class="custom-control custom-checkbox ml-2">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="refresh1"
+              />
+              <label class="custom-control-label" for="refresh1"
+                >After the first run, calculate on every field change</label
+              >
+            </div>
+          </div>
+        </form>
+        <div id="buttons1" class="my-2">
+          <button
+            id="submit1"
+            onclick='calculate(document.getElementById("distribution1").value,1e-6)'
+            type="button"
+            class="btn btn-primary m-1"
+          >
+            Calculate
+          </button>
+          <button
+            id="delete1"
+            onclick='delete_list("x1,sigma1,xp,df,df2,n,p")'
+            type="button"
+            class="btn btn-secondary m-1"
+          >
+            Clear
+          </button>
+        </div>
+        <div id="results" class="form-row" style="display: none">
+          <div id="normal" class="text-primary col-lg-12"></div>
+          <div
+            id="messageC"
+            tabindex="0"
+            class="form-group col-lg-6 blue_backgroud p-3"
+          ></div>
+          <div
+            id="DistributionC"
+            class="form-group col-lg-6 p-1 blue_backgroud"
+          ></div>
+        </div>
+      </div>
+      <div id="left_nav" class="col-md-3 pt-5">
+        <div class="list-group">
+          <h5>Calculators</h5>
+          <a class="mr-4" href="p_value.html">P-value</a>
+          <a class="mr-4" href="critical-value-calculator.html"
+            >Critical value</a
+          >
+          <a class="mr-4" href="probability-calculator.html">Probability</a>
+          <a class="mr-4" href="110MeanNormal1.html">Z-test</a>
+          <a class="mr-4" href="150MeanT2uneq.html">T-test</a>
+          <a class="mr-4" href="310GoodnessChi.html">Chi-squared test</a>
+          <a class="mr-4" href="220VarF2.html">F-test</a>
+          <a class="mr-4" href="41_proportion_confidence_interval.html"
+            >Proportion confidence interval</a
+          >
+          <a class="mr-4" href="50_ci_sample_size.html"
+            >Confidence interval sample size</a
+          >
+          <a class="mr-4" href="average-calculator.html">Average</a>
+          <a class="mr-4" href="geometric-mean-calculator.html"
+            >Geometric mean</a
+          >
+          <a class="mr-4" href="standard-deviation-calculator.html"
+            >Standard deviation</a
+          >
+          <a class="mr-4" href="mean-median-mode-calculator.html"
+            >Mean Median Mode IQR</a
+          >
+          <a class="mr-4 mb-4" href="combinations-calculator.html"
+            >Combinations calculator</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <span tabindex="0" id="bot"></span>
+</html>
